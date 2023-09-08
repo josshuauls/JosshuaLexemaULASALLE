@@ -1,42 +1,62 @@
 import ply.lex as lex
 
 reserved = {
-  'int' : 'TYPE_INT',
-  'float' : 'TYPE_FLOAT',
-  'bool' : 'TYPE_BOOL',
-  'char' : 'TYPE_CHAR',
-  'print' : 'PRINT',
-  'read' : 'READ',
-  'return' : 'RETURN',
-  'for' : 'FOR',
-  'while' : 'WHILE',
-  'if' : 'IF',
-  'else' : 'ELSE'
+  'kancha' : 'TYPE_INT',
+  'lliqlla' : 'TYPE_FLOAT',
+  'wañuchiy' : 'TYPE_BOOL',
+  'wakchaq' : 'TYPE_CHAR',
+  'quilway' : 'PRINT',
+  'ñawi' : 'READ',
+  'qillqay' : 'RETURN',
+  'maypi' : 'FOR',
+  'hamuy' : 'WHILE',
+  'kunan' : 'IF',
+  'chaypi' : 'ELSE'
 }
 
-tokens = ['NUMBER','PLUS','MINUS','TIMES','DIVIDE','LPAREN','RPAREN','ID','DECM','COMMET_SIM','STRING','CHAR']+list(reserved.values())
+tokens = ['NUMBER','DECM','ID',
+          'OPER_ASIG','OPER_ADD','OPER_SUB','OPER_MUL','OPER_DIV','OPER_MOD','OPER_AND','OPER_OR',
+          'OPER_MYQ','OPER_MNQ','OPER_MYI','OPER_MNI','OPER_IQL','OPER_DIF',
+          'PARENT_OP','PARENT_CL','KEY_OP','KEY_CL','SQUARE_OP','SQUARE_CL',
+          'COMMET_SIM','COMMET_COM',
+          'STRING','CHAR']+list(reserved.values())
 
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
+t_OPER_ASIG = r'\='
+t_OPER_ADD = r'\+'
+t_OPER_SUB = r'-'
+t_OPER_MUL = r'\*'
+t_OPER_DIV = r'/'
+t_OPER_MOD = r'\%'
+t_OPER_AND = r'\&'
+t_OPER_OR = r'\|'
+
+t_OPER_MYQ = r'>'
+t_OPER_MNQ = r'<'
+t_OPER_MYI = r'>='
+t_OPER_MNI = r'<='
+t_OPER_IQL = r'=='
+t_OPER_DIF = r'!='
+
+t_PARENT_OP = r'\('
+t_PARENT_CL = r'\)'
+t_KEY_OP = r'\{'
+t_KEY_CL = r'\}'
+t_SQUARE_OP = r'\['
+t_SQUARE_CL = r'\]'
+
+t_COMMET_SIM = r'//.*'
+t_COMMET_COM = r'///.*///'
 t_STRING = r'".*"'
 t_CHAR = r"'.'"
-##t_ID = r'([a-zA-Z]|\_)([a-zA-Z]|[0-9]|\_)*'
-###t_DECM = r'\d+\.\d+'
+
+
 ### A regular expression rule with some action code
 def t_DECM(t):
   r'\d+\.\d+'
   t.value = float(t.value)
   return t
-'''def CHAR(t):
-  r'"\w"'
-  t.type = str(t.value)
-  return t'''
 def t_ID(t):
-  r'([a-zA-Z]|\_)([a-zA-Z]|[0-9]|\_)*'
+  r'([a-zA-Z]|ñ|Ñ|\_)([a-zA-Z]|[0-9]|ñ|Ñ|\_)*'
   t.type = reserved.get(t.value,'ID')
   return t
 def t_NUMBER(t):
@@ -56,7 +76,9 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 # Test it out
-data = '''if else for while return'''
+
+
+data = ''' maypi hamuy kunan chaypi kancha lliqlla wañuchiy wakchaq quilway ñawi qillqay'''
 # Give the lexer some input
 lexer.input(data)
 # Tokenize
