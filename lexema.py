@@ -19,7 +19,7 @@ tokens = ['NUMBER','DECM','ID',
           'OPER_MYQ','OPER_MNQ','OPER_MYI','OPER_MNI','OPER_IQL','OPER_DIF',
           'PARENT_OP','PARENT_CL','KEY_OP','KEY_CL','SQUARE_OP','SQUARE_CL',
           'COMMET_SIM','COMMET_COM',
-          'STRING','CHAR']+list(reserved.values())
+          'STRING','CHAR','CHAR_ESP']+list(reserved.values())
 
 t_OPER_ASIG = r'\='
 t_OPER_ADD = r'\+'
@@ -48,6 +48,7 @@ t_COMMET_SIM = r'//.*'
 t_COMMET_COM = r'///.*///'
 t_STRING = r'".*"'
 t_CHAR = r"'.'"
+t_CHAR_ESP = r';|,|:'
 
 
 ### A regular expression rule with some action code
@@ -77,8 +78,10 @@ def t_error(t):
 lexer = lex.lex()
 # Test it out
 
+with open('archivo.txt','r',encoding='utf-8') as archivo:
+  data = archivo.read()
 
-data = ''' maypi hamuy kunan chaypi kancha lliqlla wañuchiy wakchaq quilway ñawi qillqay'''
+#data = ''' maypi hamuy kunan chaypi kancha lliqlla wañuchiy wakchaq quilway ñawi qillqay'''
 # Give the lexer some input
 lexer.input(data)
 # Tokenize
@@ -88,3 +91,5 @@ while True:
     break # No more input
   print(tok)
   #print(tok.type, tok.value, tok.lineno, tok.lexpos)
+
+print("Se ejecuto correctamente")

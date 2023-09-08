@@ -1,0 +1,18 @@
+kancha wasi(kancha a,kancha b){
+    kancha c = a + b;
+    qillqay c;
+}
+
+kancha inti(kancha a){
+    kancha b = a + 100;
+    qillway b;
+}
+
+kancha killa(){
+    kancha bamba = inti(6) + wasi(5,4);
+    
+    maypi(kancha i = 0; i < 10; i++){
+        quilway "HOLA MUNDO";
+    }
+    qillqay 0;
+}
